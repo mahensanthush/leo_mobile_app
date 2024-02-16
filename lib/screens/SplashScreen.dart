@@ -1,17 +1,16 @@
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors
+
 import 'dart:async';
-import 'SignScreen.dart';
-
 import 'package:flutter/material.dart';
-
-
-
+import 'package:leo_mobile_app/screens/SignIn.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   AnimationController? _animationController;
   Animation<double>? _animation;
 
@@ -28,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       // Navigate to the home screen after 3 seconds
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => SignScreen()),
+        MaterialPageRoute(builder: (context) => SignInPage()),
       );
     });
   }
@@ -51,7 +50,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             children: [
               SizedBox(height: 10),
               Container(
-                child: Text("UOK LEO",
+                child: Text(
+                  "UOK LEO",
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.w900,
@@ -59,9 +59,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                   ),
                 ),
               ),
-              // CircularProgressIndicator(
-              //   valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-              // ),
             ],
           ),
         ),
@@ -69,3 +66,4 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     );
   }
 }
+//

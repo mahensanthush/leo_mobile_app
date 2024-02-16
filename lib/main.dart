@@ -1,28 +1,19 @@
-import 'package:leo_mobile_app/screens/SplashScreen.dart';
+// ignore_for_file: unnecessary_new
 
 import 'package:flutter/material.dart';
+import './screens/SplashScreen.dart';
 
+void main() => runApp(MyApp());
 
-void main() async {
-  runApp(
-    const MyApp(),
-  );
-}
-
-class MyApp extends StatelessWidget{
-  const MyApp({super.key});
-
+class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'UOK LEO Mobile APP',
+      title: 'UOK LEO',
       theme: ThemeData(
-        primaryColor: Colors.amber,
-        scaffoldBackgroundColor: Colors.white,
+        primaryColor: const Color.fromARGB(255, 250, 225, 2),
       ),
       home: SplashScreen(),
     );
   }
 }
-
