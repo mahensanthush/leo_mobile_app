@@ -2,7 +2,7 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:leo_mobile_app/screens/SignIn.dart';
+import 'package:uokleo/screens/SignIn.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
