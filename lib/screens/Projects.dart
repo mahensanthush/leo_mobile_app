@@ -1,25 +1,39 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
+// ignore_for_file: use_super_parameters, prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectPage extends StatefulWidget {
-  const ProjectPage({super.key});
+  const ProjectPage({Key? key}) : super(key: key);
 
   @override
   State<ProjectPage> createState() => ProjectPageState();
 }
 
 class ProjectPageState extends State<ProjectPage> {
+  Future<QuerySnapshot> _getProjects() async {
+    return await FirebaseFirestore.instance
+        .collection('Projects')
+        .orderBy('timestamp', descending: true)
+        .get();
+  }
+
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            height: 180.0,
+            height: screenWidth * 0.33,
             decoration: BoxDecoration(
-              color: Colors.yellow,
+              color: Color.fromARGB(255, 247, 223, 2),
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(20.0),
                 bottomRight: Radius.circular(20.0),
@@ -30,30 +44,32 @@ class ProjectPageState extends State<ProjectPage> {
                 ClipPath(
                   clipper: ArcClipper(),
                   child: Container(
-                    height: 20.0,
+                    height: screenHeight * 0.02,
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 244, 219, 3),
+                      color: const Color.fromARGB(255, 247, 223, 2),
                     ),
                   ),
                 ),
                 Positioned(
-                  left: 22.0,
-                  top: 50.0,
+                  left: 0.05 * screenWidth,
+                  top: 0.1 * screenWidth,
                   child: CircleAvatar(
                     backgroundImage: AssetImage('assets/images/download.jpeg'),
-                    radius: 38.0,
+                    radius: screenWidth * 0.1,
                   ),
                 ),
                 Positioned(
-                  right: 20.0,
-                  top: 55.0,
+                  right: 0.2 * screenWidth,
+                  top: 0.15 * screenWidth,
                   child: Container(
-                    constraints: BoxConstraints(maxWidth: 250.0),
+                    constraints: BoxConstraints(
+                      maxWidth: screenWidth * 0.4,
+                    ),
                     child: Text(
-                      'LEO CLUB OF UNIVERSITY OF KALANIYA',
+                      'Projects of Leo Club Of UOK',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 20.0,
+                        fontSize: screenWidth * 0.04,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -62,12 +78,31 @@ class ProjectPageState extends State<ProjectPage> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: BlogsTitleWidget(),
-          ),
           Expanded(
-            child: YourBlogContentWidget(),
+            child: FutureBuilder(
+              future: _getProjects(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error: ${snapshot.error}'),
+                  );
+                } else {
+                  List<DocumentSnapshot> projects = snapshot.data!.docs;
+
+                  if (projects.isEmpty) {
+                    // Display a message when there are no projects
+                    return Center(
+                      child: Text('No projects added yet.'),
+                    );
+                  }
+                  return YourBlogContentWidget(projects: projects);
+                }
+              },
+            ),
           ),
         ],
       ),
@@ -75,23 +110,144 @@ class ProjectPageState extends State<ProjectPage> {
   }
 }
 
-class BlogsTitleWidget extends StatelessWidget {
+class YourBlogContentWidget extends StatelessWidget {
+  final List<DocumentSnapshot> projects;
+
+  YourBlogContentWidget({required this.projects});
+
   @override
   Widget build(BuildContext context) {
-    return Text(
-      'PROJECTS',
-      style: TextStyle(
-        fontSize: 24.0,
-        fontWeight: FontWeight.bold,
-      ),
+    return ListView.builder(
+      itemCount: projects.length,
+      itemBuilder: (context, index) {
+        var project = projects[index].data() as Map<String, dynamic>;
+        String projectId = projects[index].id;
+
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Image.network(
+                project['image_url'] ?? '',
+                height: 300,
+                fit: BoxFit.fill,
+              ),
+              SizedBox(height: 8),
+              LearnMoreCaption(projectId, project['caption'] ?? ''),
+              Divider(),
+            ],
+          ),
+        );
+      },
     );
   }
 }
 
-class YourBlogContentWidget extends StatelessWidget {
+class LearnMoreCaption extends StatefulWidget {
+  final String projectId;
+  final String caption;
+
+  LearnMoreCaption(this.projectId, this.caption);
+
+  @override
+  _LearnMoreCaptionState createState() => _LearnMoreCaptionState();
+}
+
+class _LearnMoreCaptionState extends State<LearnMoreCaption> {
+  bool showFullCaption = false;
+  late TextEditingController _textEditingController;
+
+  @override
+  void initState() {
+    super.initState();
+    _textEditingController = TextEditingController(text: widget.caption);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
+    String truncatedCaption =
+        showFullCaption ? widget.caption : _truncateCaption(widget.caption, 5);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        GestureDetector(
+          onLongPress: () {
+            Clipboard.setData(ClipboardData(text: widget.projectId));
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Project ID copied to clipboard'),
+              ),
+            );
+          },
+          child: Text(
+            'Project ID: ${widget.projectId}',
+            style: TextStyle(
+              fontSize: 6,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.right,
+          ),
+        ),
+        Linkify(
+          onOpen: (LinkableElement link) async {
+            try {
+              if (await canLaunch(link.url)) {
+                await launch(link.url);
+              } else {
+                throw 'Could not launch ${link.url}';
+              }
+            } catch (e) {
+              print('Error launching URL: $e');
+            }
+          },
+          text: truncatedCaption,
+          style: TextStyle(
+            fontSize: 16,
+          ),
+          linkStyle: TextStyle(
+            color: Color.fromARGB(255, 11, 36, 137),
+          ),
+        ),
+        if (showFullCaption)
+          TextButton(
+            onPressed: () {
+              setState(() {
+                showFullCaption = false;
+                _textEditingController.text = truncatedCaption;
+              });
+            },
+            child: Text(
+              'See Less',
+              style: TextStyle(
+                color: Color.fromARGB(255, 0, 207, 7),
+              ),
+            ),
+          ),
+        if (!showFullCaption)
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                showFullCaption = true;
+              });
+            },
+            child: Text(
+              'See More',
+              style: TextStyle(
+                fontSize: 15,
+                color: const Color.fromARGB(255, 0, 207, 7),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+
+  String _truncateCaption(String caption, int maxWords) {
+    List<String> words = caption.split(' ');
+    return words.take(maxWords).join(' ');
   }
 }
 
