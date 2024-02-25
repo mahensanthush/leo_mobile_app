@@ -1,9 +1,10 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
+// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BlogPage extends StatefulWidget {
-  const BlogPage({super.key});
+  const BlogPage({Key? key});
 
   @override
   State<BlogPage> createState() => _BlogPageState();
@@ -12,12 +13,14 @@ class BlogPage extends StatefulWidget {
 class _BlogPageState extends State<BlogPage> {
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            height: 180.0,
+            height: 0.33 * screenWidth,
             decoration: BoxDecoration(
               color: const Color.fromARGB(255, 247, 223, 2),
               borderRadius: BorderRadius.only(
@@ -32,28 +35,28 @@ class _BlogPageState extends State<BlogPage> {
                   child: Container(
                     height: 20.0,
                     decoration: BoxDecoration(
-                      color: Colors.yellow,
+                      color: Color.fromARGB(255, 247, 223, 2),
                     ),
                   ),
                 ),
                 Positioned(
-                  left: 22.0,
-                  top: 50.0,
+                  left: 0.05 * screenWidth,
+                  top: 0.1 * screenWidth,
                   child: CircleAvatar(
                     backgroundImage: AssetImage('assets/images/download.jpeg'),
-                    radius: 38.0,
+                    radius: 0.1 * screenWidth,
                   ),
                 ),
                 Positioned(
-                  right: 20.0,
-                  top: 55.0,
+                  right: 0.15 * screenWidth,
+                  top: 0.15 * screenWidth,
                   child: Container(
-                    constraints: BoxConstraints(maxWidth: 250.0),
+                    constraints: BoxConstraints(maxWidth: 0.5 * screenWidth),
                     child: Text(
                       'LEO CLUB OF UNIVERSITY OF KALANIYA',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 20.0,
+                        fontSize: 0.04 * screenWidth,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -61,10 +64,6 @@ class _BlogPageState extends State<BlogPage> {
                 ),
               ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: BlogsTitleWidget(),
           ),
           Expanded(
             child: YourBlogContentWidget(),
@@ -75,23 +74,132 @@ class _BlogPageState extends State<BlogPage> {
   }
 }
 
-class BlogsTitleWidget extends StatelessWidget {
+class YourBlogContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Text(
-      'BLOGS',
-      style: TextStyle(
-        fontSize: 24.0,
-        fontWeight: FontWeight.bold,
-      ),
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('Blogs')
+          .orderBy('timestamp',
+              descending: true) // Order by timestamp in descending order
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        List<DocumentSnapshot> blogs = snapshot.data?.docs ?? [];
+
+        if (blogs.isEmpty) {
+          return Center(child: Text('No blogs added yet.'));
+        }
+
+        return ListView.builder(
+          itemCount: blogs.length,
+          itemBuilder: (context, index) {
+            // Extracting data from Firestore
+            var blogData = blogs[index].data() as Map<String, dynamic>;
+            String blogTitle = blogData['title'] ?? '';
+            String blogText = blogData['long_caption'] ?? '';
+            String imagePath = blogData['image_url'] ?? '';
+
+            return BlogItemWidget(blogText, imagePath, blogTitle);
+          },
+        );
+      },
     );
   }
 }
 
-class YourBlogContentWidget extends StatelessWidget {
+class BlogItemWidget extends StatelessWidget {
+  final String blogText;
+  final String imagePath;
+  final String blogTitle;
+
+  BlogItemWidget(this.blogText, this.imagePath, this.blogTitle);
+
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    return Padding(
+      padding: EdgeInsets.all(0.02 * screenWidth),
+      child: Card(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Image.network(
+              imagePath,
+              height: 280,
+              fit: BoxFit.fill,
+            ),
+            Padding(
+              padding: EdgeInsets.all(0.04 * screenWidth),
+              child: SelectableText(
+                // Wrap with SelectableText
+                blogTitle,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 0.05 * screenWidth,
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(0.04 * screenWidth),
+              child: Text(
+                blogText,
+                maxLines: 2, // Display only 2 lines initially
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    _showLearnMoreDialog(context, blogText);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromARGB(255, 23, 187, 29)),
+                  child: Text(
+                    'Learn more',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showLearnMoreDialog(BuildContext context, String blogText) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: SelectableText(blogTitle), // Wrap with SelectableText
+          content: SingleChildScrollView(
+            child: Text(blogText),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 

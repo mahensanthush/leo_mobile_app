@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, use_key_in_widget_constructors
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:uokleo/screens/SignIn.dart';
@@ -19,12 +17,11 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 1500),
+      duration: Duration(milliseconds: 3000),
     );
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController!);
     _animationController!.forward();
     Timer(Duration(seconds: 3), () {
-      // Navigate to the home screen after 3 seconds
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => SignInPage()),
@@ -48,15 +45,22 @@ class _SplashScreenState extends State<SplashScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 10),
-              Container(
-                child: Text(
-                  "UOK LEO",
-                  style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.amber,
-                  ),
+              AnimatedOpacity(
+                opacity: 1,
+                duration: Duration(seconds: 1),
+                child: Image.asset(
+                  'assets/images/download.jpeg',
+                  height: 150,
+                  width: 150,
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'UOK LEOS',
+                style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.amber,
                 ),
               ),
             ],
@@ -66,4 +70,3 @@ class _SplashScreenState extends State<SplashScreen>
     );
   }
 }
-//
