@@ -7,7 +7,7 @@ import './screens/SplashScreen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -24,3 +24,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+//ddsdsfbdfd
