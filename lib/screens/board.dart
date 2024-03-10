@@ -225,7 +225,7 @@ class _BoardPageState extends State<BoardPage> {
                   _buildBoardMember(
                     'Leo Dhilmi Sharudya',
                     'International Relations',
-                    'assets/images/download.jpeg',
+                    'assets/board/dhilmi.jpg',
                   ),
                   _buildBoardMember(
                     'Leo Lankeshi Wanninayaka',
