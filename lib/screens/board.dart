@@ -133,7 +133,7 @@ class _BoardPageState extends State<BoardPage> {
                   _buildBoardMember(
                     'Leo Pawani Methmini',
                     'Betterment of Leoism',
-                    'assets/images/download.jpeg',
+                    'assets/board/pawani.jpg',
                   ),
                   _buildBoardMember(
                     'Leo Abhishek Dickwella',
@@ -172,6 +172,11 @@ class _BoardPageState extends State<BoardPage> {
                   ),
                   _buildBoardMember(
                     'Leo Krishan Fernando',
+                    'Marketings',
+                    'assets/images/download.jpeg',
+                  ),
+                  _buildBoardMember(
+                    'Leo Fahad Husein',
                     'Marketings',
                     'assets/images/download.jpeg',
                   ),
@@ -245,7 +250,7 @@ class _BoardPageState extends State<BoardPage> {
                   _buildBoardMember(
                     'Leo Ridmi Kavindya',
                     'Religion & Culture Avenue',
-                    'assets/images/download.jpeg',
+                    'assets/board/kavindya.jpg',
                   ),
                   _buildBoardMember(
                     'Leo Nethmi Hirunika',
@@ -285,7 +290,7 @@ class _BoardPageState extends State<BoardPage> {
                   _buildBoardMember(
                     'Leo Thisali Kariyawasam',
                     'Sustainable Development',
-                    'assets/images/download.jpeg',
+                    'assets/board/thisali.jpg',
                   ),
                   _buildBoardMember(
                     'Leo Samadhi Ranawaka',
@@ -310,7 +315,7 @@ class _BoardPageState extends State<BoardPage> {
                   _buildBoardMember(
                     'Leo Sadeesha Dilhara',
                     'Health Care Avenue',
-                    'assets/images/download.jpeg',
+                    'assets/board/dilhara.jpg',
                   ),
                   _buildBoardMember(
                     'Leo Chamod Vishwa',
@@ -325,7 +330,7 @@ class _BoardPageState extends State<BoardPage> {
                   _buildBoardMember(
                     'Leo Tharindu Sumal',
                     'Wildlife & Animal Conservation Avenue',
-                    'assets/images/download.jpeg',
+                    'assets/board/sumal.jpg',
                   ),
                   _buildBoardMember(
                     'Leo Yasasi Dandeniya',
@@ -353,7 +358,7 @@ class _BoardPageState extends State<BoardPage> {
         children: [
           Image.asset(
             imagePath,
-            height: 90,
+            height: 80,
             width: 100,
             fit: BoxFit.cover,
           ),

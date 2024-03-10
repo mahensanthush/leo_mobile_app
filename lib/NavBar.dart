@@ -19,8 +19,8 @@ class _NavBarState extends State<NavBar> {
     BlogPage(),
     ProjectPage(),
     EventPage(),
-    AdminPage(),
     BoardPage(),
+    AdminPage(),
   ];
 
   @override
@@ -66,13 +66,13 @@ class _NavBarState extends State<NavBar> {
               backgroundColor: Color.fromARGB(255, 247, 223, 2),
             ),
             BottomNavigationBarItem(
-              icon: buildIconWithBox(Icons.admin_panel_settings_outlined, 3),
-              label: 'Admin',
+              icon: buildIconWithBox(Icons.people_alt_outlined, 4),
+              label: 'board',
               backgroundColor: Color.fromARGB(255, 247, 223, 2),
             ),
             BottomNavigationBarItem(
-              icon: buildIconWithBox(Icons.people_alt_outlined, 4),
-              label: 'board',
+              icon: buildIconWithBox(Icons.admin_panel_settings_outlined, 3),
+              label: 'Admin',
               backgroundColor: Color.fromARGB(255, 247, 223, 2),
             ),
             BottomNavigationBarItem(
