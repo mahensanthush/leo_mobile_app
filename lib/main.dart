@@ -7,7 +7,7 @@ import './screens/SplashScreen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }
 
@@ -16,9 +16,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'UOK LEO',
+      title: 'UOKLEOS',
       theme: ThemeData(
-        primaryColor: const Color.fromARGB(255, 250, 225, 2),
+        primaryColor: Color.fromARGB(255, 0, 0, 0),
       ),
       home: SplashScreen(),
     );
