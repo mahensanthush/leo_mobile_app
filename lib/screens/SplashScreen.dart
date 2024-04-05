@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Authentication
 import 'package:uokleo/HomePage.dart';
 import 'package:uokleo/screens/SignIn.dart';
 
@@ -59,18 +59,18 @@ class _SplashScreenState extends State<SplashScreen>
                 opacity: 1,
                 duration: Duration(seconds: 1),
                 child: Image.asset(
-                  'assets/images/download.jpeg',
+                  'assets/images/logo.PNG',
                   height: 150,
                   width: 150,
                 ),
               ),
               SizedBox(height: 20),
               Text(
-                'UOKLEOS',
+                'UOK LEOS',
                 style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.w900,
-                  color: const Color.fromARGB(255, 3, 3, 3),
+                  color: Colors.amber,
                 ),
               ),
             ],

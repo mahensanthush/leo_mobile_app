@@ -16,12 +16,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'UOKLEOS',
+      title: 'UOK LEO',
       theme: ThemeData(
-        primaryColor: Color.fromARGB(255, 0, 0, 0),
+        primaryColor: const Color.fromARGB(255, 250, 225, 2),
       ),
       home: SplashScreen(),
     );
   }
 }
-//ddsdsfbdfdfhdjhsh
