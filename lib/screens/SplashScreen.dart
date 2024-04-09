@@ -66,11 +66,11 @@ class _SplashScreenState extends State<SplashScreen>
               ),
               SizedBox(height: 20),
               Text(
-                'UOK LEOS',
+                'UOKLEOS',
                 style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.w900,
-                  color: Colors.amber,
+                  color: const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
             ],

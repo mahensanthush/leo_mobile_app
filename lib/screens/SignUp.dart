@@ -71,7 +71,8 @@ class SignUpPageState extends State<SignUpPage> {
                     labelText: "UserName",
                     prefixIcon: Icon(Icons.person_outline),
                     filled: true,
-                    fillColor: Colors.black.withOpacity(0.3),
+                    fillColor: const Color.fromARGB(255, 255, 255, 255)
+                        .withOpacity(0.1),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Color.fromARGB(255, 247, 223, 2),
@@ -98,7 +99,8 @@ class SignUpPageState extends State<SignUpPage> {
                     labelText: "Email",
                     prefixIcon: Icon(Icons.email_outlined),
                     filled: true,
-                    fillColor: Colors.black.withOpacity(0.3),
+                    fillColor: const Color.fromARGB(255, 255, 255, 255)
+                        .withOpacity(0.1),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Color.fromARGB(255, 247, 223, 2),
@@ -124,7 +126,8 @@ class SignUpPageState extends State<SignUpPage> {
                   decoration: InputDecoration(
                     labelText: "New Password",
                     filled: true,
-                    fillColor: Colors.black.withOpacity(0.3),
+                    fillColor: const Color.fromARGB(255, 255, 255, 255)
+                        .withOpacity(0.1),
                     prefixIcon: Icon(Icons.lock_outline),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -164,7 +167,8 @@ class SignUpPageState extends State<SignUpPage> {
                   decoration: InputDecoration(
                     labelText: "Confirm Password",
                     filled: true,
-                    fillColor: Colors.black.withOpacity(0.3),
+                    fillColor: const Color.fromARGB(255, 255, 255, 255)
+                        .withOpacity(0.1),
                     prefixIcon: Icon(Icons.lock_outline),
                     suffixIcon: IconButton(
                       icon: Icon(
