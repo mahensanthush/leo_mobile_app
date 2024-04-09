@@ -53,7 +53,7 @@ class _BlogPageState extends State<BlogPage> {
                   child: Container(
                     constraints: BoxConstraints(maxWidth: 0.5 * screenWidth),
                     child: Text(
-                      'LEO CLUB OF UNIVERSITY OF KALANIYA',
+                      'LEO CLUB OF UNIVERSITY OF KELANIYA',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 0.04 * screenWidth,
