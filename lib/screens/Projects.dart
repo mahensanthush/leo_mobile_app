@@ -59,17 +59,15 @@ class ProjectPageState extends State<ProjectPage> {
                   ),
                 ),
                 Positioned(
-                  right: 0.2 * screenWidth,
+                  right: 0.15 * screenWidth,
                   top: 0.15 * screenWidth,
                   child: Container(
-                    constraints: BoxConstraints(
-                      maxWidth: screenWidth * 0.4,
-                    ),
+                    constraints: BoxConstraints(maxWidth: 0.5 * screenWidth),
                     child: Text(
-                      'Projects Of Leo Club Of UOK',
+                      'LEO CLUB OF UNIVERSITY OF KALANIYA',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: screenWidth * 0.04,
+                        fontSize: 0.04 * screenWidth,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

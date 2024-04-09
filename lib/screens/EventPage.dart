@@ -87,7 +87,7 @@ class _EventPageState extends State<EventPage> {
                     child: Container(
                       constraints: BoxConstraints(maxWidth: 0.5 * screenWidth),
                       child: Text(
-                        'Stay On Track With Projects Dates',
+                        'PROJECTS CALENDAR',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 0.04 * screenWidth,
