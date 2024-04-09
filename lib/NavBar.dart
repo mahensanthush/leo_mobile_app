@@ -64,12 +64,12 @@ class _NavBarState extends State<NavBar> {
               backgroundColor: Color.fromARGB(255, 247, 223, 2),
             ),
             BottomNavigationBarItem(
-              icon: buildIconWithBox(Icons.people_alt_outlined, 4),
+              icon: buildIconWithBox(Icons.people_alt_outlined, 3),
               label: 'board',
               backgroundColor: Color.fromARGB(255, 247, 223, 2),
             ),
             BottomNavigationBarItem(
-              icon: buildIconWithBox(Icons.logout, 5),
+              icon: buildIconWithBox(Icons.logout, 4),
               label: 'Logout',
               backgroundColor: Color.fromARGB(255, 247, 223, 2),
             ),
