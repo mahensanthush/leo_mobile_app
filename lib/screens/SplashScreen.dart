@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen>
                 opacity: 1,
                 duration: Duration(seconds: 1),
                 child: Image.asset(
-                  'assets/images/logo.PNG',
+                  'assets/images/applogo.png',
                   height: 150,
                   width: 150,
                 ),

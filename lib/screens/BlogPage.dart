@@ -43,7 +43,7 @@ class _BlogPageState extends State<BlogPage> {
                   left: 0.05 * screenWidth,
                   top: 0.1 * screenWidth,
                   child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/logo.PNG'),
+                    backgroundImage: AssetImage('assets/images/applogo.png'),
                     radius: 0.1 * screenWidth,
                   ),
                 ),

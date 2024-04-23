@@ -54,7 +54,7 @@ class ProjectPageState extends State<ProjectPage> {
                   left: 0.05 * screenWidth,
                   top: 0.1 * screenWidth,
                   child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/logo.PNG'),
+                    backgroundImage: AssetImage('assets/images/applogo.png'),
                     radius: screenWidth * 0.1,
                   ),
                 ),
